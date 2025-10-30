@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            padding: 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            width: 320px
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0
+        }
+
+        button {
+            width: 100%;
+            padding: 8px
+        }
+
+        .msg {
+            color: green
+        }
+
+        .err {
+            color: red
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h2>Entrar</h2>
+
+        <div th:if="${msg}" class="msg" th:text="${msg}"></div>
+        <div th:if="${errorMsg}" class="err" th:text="${errorMsg}"></div>
+
+        <form th:action="@{/j_security_check}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            
+            <label>Usuário</label>
+            <input type="text" name="j_username" placeholder="usuário" required />
+
+            <label>Senha</label>
+            <input type="password" name="j_password" placeholder="senha" required />
+
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+</body>
+
+</html>

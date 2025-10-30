@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Home</title>
+</head>
+
+<body>
+    <h1>Bem-vindo, <span th:text="${username}">user</span>!</h1>
+
+    <form th:action="@{/perform_logout}" method="post">
+        <button type="submit">Sair</button>
+    </form>
+</body>
+
+</html>
