@@ -15,7 +15,9 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.session.FindByIndexNameSessionRepository;
+import org.springframework.session.Session;
 @Configuration
 public class SecurityConfig {
     
@@ -27,13 +29,13 @@ public HttpSessionEventPublisher httpSessionEventPublisher() {
 }
 
 @Bean
-public org.springframework.beans.factory.ObjectProvider<org.springframework.session.FindByIndexNameSessionRepository<? extends org.springframework.session.Session>> findByIndexNameSessionRepositoryProvider(org.springframework.beans.factory.ObjectProvider<org.springframework.session.FindByIndexNameSessionRepository<? extends org.springframework.session.Session>> provider) {
+public ObjectProvider<FindByIndexNameSessionRepository<? extends Session>> findByIndexNameSessionRepositoryProvider(ObjectProvider<FindByIndexNameSessionRepository<? extends Session>> provider) {
     return provider;
 }
 
 @Bean
-public org.springframework.security.web.authentication.logout.LogoutHandler sessionCleanupLogoutHandler(
-        org.springframework.beans.factory.ObjectProvider<org.springframework.session.FindByIndexNameSessionRepository<? extends org.springframework.session.Session>> sessionRepositoryProvider,
+public LogoutHandler sessionCleanupLogoutHandler(
+        ObjectProvider<FindByIndexNameSessionRepository<? extends Session>> sessionRepositoryProvider,
         SessionRegistry sessionRegistry) {
     var repo = sessionRepositoryProvider.getIfAvailable();
     return new SessionCleanupLogoutHandler(repo, sessionRegistry);
